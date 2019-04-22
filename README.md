@@ -22,7 +22,7 @@ https://localhost:5000/swagger
 - Если аутентификация нужна, то прописать валидные данные в `Startup.cs` и `AppSettings.json`
 - Разместить файлы для скачивания и `ReleaseNotes.txt` в соответствии со структурой каталогов `/Content/{AppName}/{Platform}/{version}/{version.apk}`
 
-#References
+# References
 - Asp.Net Core 2.2
 - IdentitServer4
 - NLog
