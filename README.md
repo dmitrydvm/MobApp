@@ -21,3 +21,9 @@ https://localhost:5000/swagger
 - Если не нужна аутентификация, то удалить атрибут `[Authorize]` с контроллера
 - Если аутентификация нужна, то прописать валидные данные в `Startup.cs` и `AppSettings.json`
 - Разместить файлы для скачивания и `ReleaseNotes.txt` в соответствии со структурой каталогов `/Content/{AppName}/{Platform}/{version}/{version.apk}`
+
+#References
+- Asp.Net Core 2.2
+- IdentitServer4
+- NLog
+- NSwag
