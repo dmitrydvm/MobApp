@@ -1,5 +1,4 @@
 # MobApp
-Service for downloading applications and receiving their release notes. Provides a response in the json like https://github.com/javiersantos/AppUpdater/wiki/UpdateFrom.JSON
 
 Сервис предназначен для получения информации о последней версии андроид-приложения и скачивания файла apk.
 Нужен для обновления клиентов в обход Google Play Market, если приложение предназначено для внутреннего использования и не публикуется в сторах.
