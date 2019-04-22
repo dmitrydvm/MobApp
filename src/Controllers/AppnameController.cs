@@ -14,7 +14,7 @@ namespace MobApps.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[Authorize(Policy = "Downloader")]
+    [Authorize(Policy = "Downloader")]
     public class AppnameController : ControllerBase
     {
         private readonly IFileService _fileService;

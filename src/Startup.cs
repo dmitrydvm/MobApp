@@ -30,30 +30,34 @@ namespace MobApps
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<Dictionary<string, string>>(Configuration.GetSection("ContentTypes"));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSwaggerDocument(config => config.Title = "MobApps Swagger Specification");
+            services.AddMvcCore()
+                .AddJsonFormatters()
+                .AddApiExplorer()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<Dictionary<string, string>>(Configuration.GetSection("ContentTypes"))
+                .AddSwaggerDocument(config => config.Title = "MobApps Swagger Specification")
+                .AddHttpContextAccessor()
+                .AddSingleton<IFileService, FileService>()
+                .AddSingleton(_env.ContentRootFileProvider);
+
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
+                .AddIdentityServerAuthentication(config =>
                 {
-                    options.Authority = Configuration.GetValue<string>("IdentitySettings:ApiAuthority");
-                    options.ApiName = "ApiName";
-                    options.ApiSecret = "ApiSecret";
+                    config.Authority = Configuration.GetValue<string>("IdentitySettings:ApiAuthority");
+                    config.ApiName = "ApiName";
+                    config.ApiSecret = "ApiSecret";
                 });
 
-            services.AddAuthorization(options =>
-            {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser()
-                    .Build();
+            services.AddAuthorization(config =>
+                {
+                    config.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                        .RequireAuthenticatedUser()
+                        .Build();
 
-                options.AddPolicy("Downloader", cfg => cfg.RequireScope("mobapps.download"));
-            });
-
-            services.AddSingleton<IFileService, FileService>();
-            services.AddHttpContextAccessor();
-            services.AddSingleton(_env.ContentRootFileProvider);
+                    config.AddPolicy("Downloader", cfg => cfg.RequireScope("mobapps.download"));
+                });
         }
 
 
