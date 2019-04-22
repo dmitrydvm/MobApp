@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MobApps.Services;
 using NSwag.AspNetCore;
 using System.Collections.Generic;
@@ -54,7 +57,7 @@ namespace MobApps
         }
 
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment() || env.IsEnvironment("Testing"))
             {
@@ -64,6 +67,19 @@ namespace MobApps
             app.UseSwaggerUi3();
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(context =>
+                {
+                    var exception = context.Features.Get<IExceptionHandlerFeature>();
+                    if (exception != null)
+                    {
+                        logger.LogError(exception.Error.ToString());
+                    }
+
+                    return null;
+                });
+            });
             app.UseMvc();
         }
     }

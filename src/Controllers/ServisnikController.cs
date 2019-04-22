@@ -35,21 +35,13 @@ namespace MobApps.Controllers
         /// Если описание отсутствует, то в поле releaseNotes вернется пустой список
         /// Запрос доступен только по токену. У юзера должен быть scope mobapps.download.
         /// </remarks>
-        /// <returns>Возвращается всегда 200</returns>
-        [ProducesResponseType(typeof(ApiResponse<VersionInfo>), StatusCodes.Status200OK)]
+        /// <returns></returns>
+        [ProducesResponseType(typeof(VersionInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(VersionInfo), StatusCodes.Status404NotFound)]
         [HttpGet("{platform}/LatestVersion")]
-        public async Task<ApiResponse<VersionInfo>> GetLatestVersion([FromRoute] string controller, string platform)
+        public async Task<VersionInfo> GetLatestVersion([FromRoute] string controller, string platform)
         {
-            try
-            {
-                return new ApiResponse<VersionInfo>(await _fileService.GetLatestVersionInfoAsync(controller, platform));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(nameof(GetLatestVersion) + Environment.NewLine + e);
-
-                return new ApiResponse<VersionInfo>("500", e.Message, e.InnerException?.Message);
-            }
+            return await _fileService.GetLatestVersionInfoAsync(controller, platform);
         }
 
 
@@ -68,22 +60,14 @@ namespace MobApps.Controllers
         [HttpGet("{platform}")]
         public async Task<IActionResult> GetAppAsync([FromRoute] string controller, string platform, string version)
         {
-            try
-            {
-                var result = await _fileService.DownloadFileAsync(controller, platform, version);
+            var result = await _fileService.DownloadFileAsync(controller, platform, version);
 
-                return result == null
-                    ? (IActionResult)NotFound("Specified version not found")
-                    : new FileStreamResult(result, _contentTypes.Single(kv => string.Equals(kv.Key, platform, StringComparison.InvariantCultureIgnoreCase)).Value)
-                    {
-                        FileDownloadName = platform + ".apk" //Хардкод, т.к. других платформ не предвидится
-                    };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(nameof(GetAppAsync) + Environment.NewLine + e);
-                throw;
-            }
+            return result == null
+                ? (IActionResult)NotFound("Specified version not found")
+                : new FileStreamResult(result, _contentTypes.Single(kv => string.Equals(kv.Key, platform, StringComparison.InvariantCultureIgnoreCase)).Value)
+                {
+                    FileDownloadName = platform + ".apk" //Хардкод, т.к. других платформ не предвидится
+                };
         }
     }
 }

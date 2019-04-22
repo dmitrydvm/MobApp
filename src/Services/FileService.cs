@@ -50,23 +50,19 @@ namespace MobApps.Services
 
             var lastDir = await GetRelativeDirPathAsync(appName, platform, null);
 
-            if (lastDir != null)
+            if (lastDir == null)
             {
-                var releaseNotes = await GetReleaseNotesAsync(lastDir);
-
-                var baseUri = new Uri($"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}");
-
-                var lastVersionFileName = Path.GetFileName(lastDir);
-
-                return new VersionInfo
-                {
-                    LatestVersion = lastVersionFileName,
-                    ReleaseNotes = releaseNotes,
-                    Url = Uri.TryCreate(baseUri, $"{appName}/{platform}?version={lastVersionFileName}", out Uri uri) ? uri : null
-                };
+                return null;
             }
 
-            return null;
+            var baseUri = new Uri($"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}");
+
+            return new VersionInfo
+            {
+                LatestVersion = Path.GetFileName(lastDir),
+                ReleaseNotes = await GetReleaseNotesAsync(lastDir),
+                Url = Uri.TryCreate(baseUri, $"{appName}/{platform}?version={Path.GetFileName(lastDir)}", out Uri uri) ? uri : null
+            };
         }
 
 
