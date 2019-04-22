@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobApps", "src\MobApps.csproj", "{D6C65B16-6102-4131-B2B5-FDCB68C8672B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FA9EE7A1-22EB-41A2-AFE1-A41417B2BCB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6C65B16-6102-4131-B2B5-FDCB68C8672B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C65B16-6102-4131-B2B5-FDCB68C8672B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C65B16-6102-4131-B2B5-FDCB68C8672B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C65B16-6102-4131-B2B5-FDCB68C8672B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D6C65B16-6102-4131-B2B5-FDCB68C8672B} = {FA9EE7A1-22EB-41A2-AFE1-A41417B2BCB8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D38360E-99F2-4FB7-978B-3C4BCDD924DD}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MobApps</name>
+    </assembly>
+    <members>
+        <member name="M:MobApps.Controllers.ServisnikController.GetLatestVersion(System.String,System.String)">
+            <summary>
+            Получение последней версии приложения
+            </summary>
+            <remarks>
+            Если описание отсутствует, то в поле releaseNotes вернется пустой список
+            Запрос доступен только по токену. У юзера должен быть claim mobapps.mpservisnik.
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:MobApps.Controllers.ServisnikController.GetAppAsync(System.String,System.String,System.String)">
+            <summary>
+            Скачивание приложения
+            </summary>
+            <remarks>
+            Если указанная версия не найдена, то вернется 404.
+            Если версия не указана, то вернется самая новая.
+            Запрос доступен только по токену. У юзера должен быть claim mobapps.mpservisnik
+            </remarks>
+            <param name="version">Запрашиваемая версия в формате х.х.х</param>
+            <returns>Для Android возвращается файл в виде android.apk с типом application/vnd.android.package-archive </returns>
+        </member>
+        <member name="M:MobApps.Services.FileService.GetRelativeDirPathAsync(System.String,System.String,System.String)">
+            <summary>
+            Собирает путь к папке по указанным параметрам
+            </summary>
+            <param name="appName"></param>
+            <param name="platform"></param>
+            <param name="version"></param>
+            <returns>
+            Возвращает относительный путь к каталогу с приложением.
+            Если указана версия, то ищет ее. Если не указана, возвращает путь к последней доступной.
+            Если не находит ничего, то возвращает null
+            </returns>
+        </member>
+    </members>
+</doc>
