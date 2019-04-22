@@ -34,7 +34,7 @@ namespace MobApps.Services
                 throw new ArgumentNullException(nameof(platform));
             }
 
-            _logger.LogInformation($"User {_httpContextAccessor.HttpContext.User.FindFirst(c => c.Type == JwtClaimTypes.Subject).Value} requested file {appName}/{platform}/{version}");
+            _logger.LogInformation($"User {_httpContextAccessor.HttpContext.User.FindFirst(c => c.Type == JwtClaimTypes.Subject)?.Value} requested file {appName}/{platform}/{version}");
 
             var dirPath = await GetRelativeDirPathAsync(appName, platform, version);
 
@@ -46,7 +46,7 @@ namespace MobApps.Services
 
         public async Task<VersionInfo> GetLatestVersionInfoAsync(string appName, string platform)
         {
-            _logger.LogInformation($"User {_httpContextAccessor.HttpContext.User.FindFirst(c => c.Type == JwtClaimTypes.Subject).Value} requested latest version");
+            _logger.LogInformation($"User {_httpContextAccessor.HttpContext.User.FindFirst(c => c.Type == JwtClaimTypes.Subject)?.Value} requested latest version");
 
             var lastDir = await GetRelativeDirPathAsync(appName, platform, null);
 

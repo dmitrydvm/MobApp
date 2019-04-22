@@ -14,14 +14,14 @@ namespace MobApps.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize(Policy = "Downloader")]
-    public class ServisnikController : ControllerBase
+    //[Authorize(Policy = "Downloader")]
+    public class AppnameController : ControllerBase
     {
         private readonly IFileService _fileService;
         private readonly Dictionary<string, string> _contentTypes;
-        private readonly ILogger<ServisnikController> _logger;
+        private readonly ILogger<AppnameController> _logger;
 
-        public ServisnikController(IFileService fileService, IOptions<Dictionary<string, string>> contentTypes, ILogger<ServisnikController> logger)
+        public AppnameController(IFileService fileService, IOptions<Dictionary<string, string>> contentTypes, ILogger<AppnameController> logger)
         {
             _fileService = fileService;
             _contentTypes = contentTypes.Value;
